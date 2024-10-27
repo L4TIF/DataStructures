@@ -25,4 +25,7 @@ test.set('adnan', 'latif')
 
 console.log(test.entries())
 console.log(test.length())
-console.log(test.values())
+
+console.log(test.remove('lion'))
+console.log(test.entries())
+console.log(test.length())

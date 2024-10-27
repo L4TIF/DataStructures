@@ -98,6 +98,35 @@ const hashMap = () => {
         }
         return null
     }
+    const remove = (key) => {
+        const hashCode = hash(key, capacity); // Find the hash code for the key
+        const bucket = buckets[hashCode]; // Get the bucket linked list
+
+        if (!bucket) return false; // If bucket is empty, return false (key does not exist)
+
+        // Handle the case where the key is in the first node
+        if (bucket.head().value.key === key) {
+            bucket.removeAt(0); // Remove the first node
+            size--;
+            return true;
+        }
+
+        // Traverse the linked list to find the node to remove
+        let previousNode = bucket.head();
+        let currentNode = previousNode.next;
+
+        while (currentNode) {
+            if (currentNode.value.key === key) {
+                previousNode.next = currentNode.next; // Remove the node by linking the previous node to the next node
+                size--;
+                return true;
+            }
+            previousNode = currentNode;
+            currentNode = currentNode.next;
+        }
+
+        return false; // Return false if the key was not found
+    };
 
 
 
@@ -125,8 +154,8 @@ const hashMap = () => {
         buckets = newBuckets;
         capacity = newCapacity;
     }
-    
-    return { set, get, has, entries, length, clear, keys, values }
+
+    return { set, get, has, entries, length, clear, keys, values, remove }
 }
 
 
